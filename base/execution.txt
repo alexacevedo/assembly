@@ -1,0 +1,44 @@
+Bienvenue au programme Les BASES !!!
+
+Ce programme sert � convertir un nombre d�cimal en nombre binaire, octal et hexad�cimal.
+Tapez le caract�re de point pour terminer le programme.
+
+Attention! Le nombre � convertir :
+
+-doit �tre compos� par chiffres � de 0 � 9 �
+
+-doit avoir maximum 6 caract�res
+
+-doit �tre compris entre - 32 768 et + 32 767
+
+
+
+Veillez entrez un nombre d�cimal (�.� - pour terminer): 87
+
+nombre	binaire         	octal 	d�cimal	hexad�cimal
++87	0000000001010111	000127	+00087	0057
+
+Veillez entrez un nombre d�cimal (�.� - pour terminer): -01
+
+nombre	binaire         	octal 	d�cimal	hexad�cimal
+-1	1111111111111111	177777	-00001	FFFF
+
+Veillez entrez un nombre d�cimal (�.� - pour terminer): +30583
+
+nombre	binaire         	octal 	d�cimal	hexad�cimal
++30583	0111011101110111	073567	+30583	7777
+
+Veillez entrez un nombre d�cimal (�.� - pour terminer): -01029
+
+nombre	binaire         	octal 	d�cimal	hexad�cimal
+-1029	1111101111111011	175773	-01029	FBFB
+
+Veillez entrez un nombre d�cimal (�.� - pour terminer): -25812
+
+nombre	binaire         	octal 	d�cimal	hexad�cimal
+-25812	1001101100101100	115454	-25812	9B2C
+
+Veillez entrez un nombre d�cimal (�.� - pour terminer): .
+
+
+Fin normale du programme.
