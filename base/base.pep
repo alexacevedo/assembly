@@ -14,7 +14,7 @@ debut:   STRO    demande,d   ; le nombre a convertir demande
          STBYTEA caract,d        
 lire:    CHARI   caract,d    ;lecture des caracteres
          LDBYTEA caract,d    ;analyse du caract�re lu
-         CPA     10,i        ;caract�re �enter� ?
+         CPA     10,i        ;caractere enter ?
          BREQ    finlire     ;si oui, on termine
 ;
 ;        la construction du nombre � convertir
@@ -28,26 +28,26 @@ lire:    CHARI   caract,d    ;lecture des caracteres
          ADDX    nombre,d    ; * 5
          BRV     d�borde     
          ASLX                ; * 10
-         BRV     d�borde     
+         BRV     deborde     
          STX     nombre,d           
 ;
-;        continuation de l'analyse du caract�re lu
+;        continuation de l'analyse du caractere lu
 ;
 pasmult: CPA     '+',i         ;determiner si le nombre est positif
          BREQ    symbole       
-         CPA     '-',i         ;determiner si le nombre est n�gatif
+         CPA     '-',i         ;determiner si le nombre est negatif
          BREQ    symbole       
          CPA     '.',i         ;determiner le choix de terminer
          BREQ    point         
-         CPA     '0',i         ;determiner si le caract�re lu est inferi�rieur � 0       
+         CPA     '0',i         ;determiner si le caractere lu est inferierieur a 0       
          BRLT    pasnombr    
-         CPA     '9',i         ;determiner si le caract�re lu est sup�rieur � 9       
+         CPA     '9',i         ;determiner si le caract�re lu est superieur a 9       
          BRGT    pasnombr   
-         SUBA    '0',i         ;transformation du caract�re ASCII en d�cimal
+         SUBA    '0',i         ;transformation du caract�re ASCII en decimal
          ADDA    nombre,d    
-         BRV     d�borde     
+         BRV     deborde     
          STA     nombre,d    
-         LDA     nbcharn,d     ;un caract�re num�rique lu de plus
+         LDA     nbcharn,d     ;un caractere numerique lu de plus
          ADDA    1,i         
          STA     nbcharn,d  
          BR      lire        
@@ -56,13 +56,13 @@ finlire: LDA     compoint,d
          BREQ    choix     ;choix de terminer le programme
          BRGT    erreur
          LDA     nbchar,d
-         BRNE    d�but
-         LDA     nbcharn,d   ;avons-nous au moins un caract�re num�rique ?
+         BRNE    debut
+         LDA     nbcharn,d   ;avons-nous au moins un caractere numerique ?
          BREQ    vide
          CPA     7,i
-         BRGE    erreur      ;l'entr�e a 7 caract�res ou plus 
-         BR      ent�te      ;affichage de la ent�te de la r�ponse  
-r�ponse: LDA     0,i
+         BRGE    erreur      ;l'entree a 7 caracteres ou plus 
+         BR      entete      ;affichage de la entete de la reponse  
+reponse: LDA     0,i
          LDA     nombre,i
          STA     nbnegati,d  
          LDA     0,i
@@ -74,38 +74,38 @@ r�ponse: LDA     0,i
          LDA     nombre,i
          DECO    nombre,d
 calcul:  CHARO   '\t',i
-         BR      calbinar    ; commen�ons la convertion en binaire   
-suite1:  BR      caloctal    ; commen�ons la convertion en octal
-suite2:  BR      caldec      ; commen�ons la convertion en d�cimal
-suite3:  BR      calhex      ; commen�ons la convertion en hexad�cimal
-suite4:  BR      d�but       ; recommen�ons le processus
-terminer:LDA     nbcharn,d   ;avons-nous au moins un caract�re num�rique ?
+         BR      calbinar    ; on commence la convertion en binaire   
+suite1:  BR      caloctal    ; on commance la convertion en octal
+suite2:  BR      caldec      ; on commance la convertion en d�cimal
+suite3:  BR      calhex      ; on commance la convertion en hexad�cimal
+suite4:  BR      debut       ; on recommence le processus
+terminer:LDA     nbcharn,d   ;avons-nous au moins un caractere numerique ?
          BREQ    fnormal
          BRNE    pasnombr              
-vide:    STRO    msgerreu,d   ;seulement le caract�re �enter� a �t� entr�
+vide:    STRO    msgerreu,d   ;seulement le caractere enter a ete entre
          LDA     0,i
-         BR      d�but        
-pasnombr:STRO    msgerreu,d  ;caract�re non compris entre 0 et 9
-         LDA     nbchar,d    ;un caract�re non num�rique lu de plus
+         BR      debut        
+pasnombr:STRO    msgerreu,d  ;caractere non compris entre 0 et 9
+         LDA     nbchar,d    ;un caractere non num�rique lu de plus
          ADDA    1,i         
          STA     nbchar,d  
          LDA     0,i
          CHARI   caract,d
          LDBYTEA caract,d 
-         CPA     10,i        ;caract�re �enter� ?
+         CPA     10,i        ;caractere enter ?
          BREQ    finlire
          BRNE    vider
 ; 
-;se d�barrasser de la entre�
+;se debarrasser de la entree
 ;
 vider:   LDA     0,i
          CHARI   caract,d
          LDBYTEA caract,d 
-         CPA     10,i        ;caract�re �enter� ?
-         BREQ    d�but
+         CPA     10,i        ;caractere enter ?
+         BREQ    debut
          BRNE    vider
 ;
-;determiner si l'entr�e des symboles � + � et � - � est invalide
+;determiner si l'entree des symboles  +  et  -  est invalide
 ;
 symbole: LDA     nbcharn,d   
          BRNE    invalide
@@ -116,13 +116,13 @@ symbole: LDA     nbcharn,d
          LDA     nbchar,d
          BREQ    signes
 ; 
-; on conserve le signe du nombre � convertir
+; on conserve le signe du nombre a convertir
 ;
 signes:  LDBYTEA caract,d
          STBYTEA signe,d     
          BR      lire
 ;
-;traitement du carat�re point
+;traitement du caratere point
 ;
 point:   LDA     compoint, d
          ADDA    1,i
@@ -143,10 +143,10 @@ calbinar:LDA     0, i
          STA     limite,d 
          LDA     0,i
          LDBYTEA signe,d
-         CPA     '-',i       ;determiner si le nombre est n�gatif 
+         CPA     '-',i       ;determiner si le nombre est negatif 
          BREQ    bneg
          BRNE    bpos
-bneg:    LDA     0,i         ;traitement avec le nombre n�gatif
+bneg:    LDA     0,i         ;traitement avec le nombre negatif
          LDA     nbnegati,d
          BR      boucle       
 bpos:    LDA     nombre,d    ;traitement avec le nombre positif    
@@ -158,7 +158,7 @@ boucle:  LDX     limite, d
          BRNE    result
          BREQ    decale   
 result:  LDA     resultat,d    
-decale:  ASLA                ;d�calage ver la gauche 
+decale:  ASLA                ;decalage ver la gauche 
          STA     resultat, d   
 si:      MOVFLGA             
          BRC     sino        ;SI C == 1 
@@ -181,10 +181,10 @@ caloctal:LDA     0, i
          STA     limite,d 
          LDA     0,i
          LDBYTEA signe,d
-         CPA     '-',i       ;determiner si le nombre est n�gatif
+         CPA     '-',i       ;determiner si le nombre est negatif
          BREQ    oneg
          BRNE    opos
-oneg:    LDA     0,i         ;traitement avec le nombre n�gatif
+oneg:    LDA     0,i         ;traitement avec le nombre negatif
          LDA     nbnegati,d
          BR      caloct       
 opos:    LDA     nombre,d    ;traitement avec le nombre positif    
@@ -195,20 +195,20 @@ caloct:  STA     nom,d
          LDA     0,i
          STA     retoct,d
          LDA     nom, d 
-         ASLA                ;d�calage ver la gauche 
+         ASLA                ;decalage ver la gauche 
          STA     nom, d 
          MOVFLGA                     
          STA     retoct,d
          LDA     retoct,d
          BR      verif0 
 con0:    DECO    retoct, d   ;affiche retenue  
-boucloct:LDA     limitoct, d ;commen�ons la boucle
+boucloct:LDA     limitoct, d ;
          CPA     5, i 
          BREQ    sortieo 
          LDA     0,i
          STA     retoct,d        
          LDA     nom, d 
-         ASLA                ;d�calage ver la gauche
+         ASLA                ;decalage ver la gauche
          STA     nom, d 
          MOVFLGA              
          STA     retoct,d
@@ -217,7 +217,7 @@ boucloct:LDA     limitoct, d ;commen�ons la boucle
 con1:    ASLA                ; *2 
          STA     chiffoct,d 
          LDA     nom, d 
-         ASLA                ;d�calage ver la gauche
+         ASLA                ;decalage ver la gauche
          STA     nom, d 
          MOVFLGA                  
          STA     retoct,d 
@@ -229,7 +229,7 @@ con2:    ADDA    chiffoct,d  ; + retenu
          ASLA                ; *2 
          STA     chiffoct,d  
          LDA     nom, d 
-         ASLA                ;d�calage ver la gauche
+         ASLA                ;decalage ver la gauche
          STA     nom, d 
          MOVFLGA                  
          STA     retoct,d
@@ -266,7 +266,7 @@ verifoc3:CPA     1,i
 sortieo: CHARO   '\t',i    
          BR      suite2
 ;
-;calcul du nombre d�cimal
+;calcul du nombre decimal
 ; 
 caldec:  LDA     0,i
          LDBYTEA signe,d
@@ -298,7 +298,7 @@ affnb:   DECO    nombre,d
          BR      suite3
 affnbneg:CHARO   '-',i
          LDA     nbnegati,d 
-comparen:CPA     -10000,i    ;traitement avec le nombre n�gatif
+comparen:CPA     -10000,i    ;traitement avec le nombre negatif
          BRGT    ad1fois
          BRLT    affnbn
 ad1fois: CHARO   '0',i
@@ -319,7 +319,7 @@ affnbn:  DECO    nombre,d
          CHARO   '\t',i 
          BR      suite3
 ;
-;calcul du nombre hexad�cimal
+;calcul du nombre hexadecimal
 ;
 calhex:  LDA     0, i
          STA     limithex,d
@@ -340,7 +340,7 @@ boucl:   LDA     limithex, d
          LDA     0,i
          STA     retenu,d        
          LDA     nomh, d 
-         ASLA                ;d�calage ver la gauche
+         ASLA                ;decalage ver la gauche
          STA     nomh, d 
          MOVFLGA                      
          STA     retenu,d
@@ -349,7 +349,7 @@ boucl:   LDA     limithex, d
 cont1:   ASLA                ; *2 
          STA     chiff,d 
          LDA     nomh, d 
-         ASLA                ;d�calage ver la gauche
+         ASLA                ;decalage ver la gauche
          STA     nomh, d 
          MOVFLGA                  
          STA     retenu,d
@@ -361,7 +361,7 @@ cont2:   ADDA    chiff,d  ; + retenu
          ASLA    ; *2 
          STA     chiff,d  
          LDA     nomh, d 
-         ASLA               ;d�calage ver la gauche
+         ASLA               ;decalage ver la gauche
          STA     nomh, d 
          MOVFLGA                  
          STA     retenu,d
@@ -373,7 +373,7 @@ cont3:   ADDA    chiff,d     ; + retenu
          ASLA                ; *2
          STA     chiff,d
          LDA     nomh, d ;
-         ASLA                ;d�calage ver la gauche
+         ASLA                ;decalage ver la gauche
          STA     nomh, d 
          MOVFLGA                  
          STA     retenu,d
@@ -431,15 +431,15 @@ E:       CPA     14,i        ; E = 14
 F:       CHARO   'F',i       ; F = 15
          BR      cont5
 finhex:  BR      suite4         
-invalide:STRO    msgerreu,d  ;l'entr�e des symboles � + � et � - � est invalide
+invalide:STRO    msgerreu,d  ;l'entree des symboles  +  et  -  est invalide
          BR      vider     
 erreur:  STRO    msgerreu,d  ;l'entr�e a 7 caract�res ou plus 
-         BR      d�but                         
-d�borde: STRO    msgerreu,d  ;nombre > 32767
+         BR      debut                         
+deborde: STRO    msgerreu,d  ;nombre > 32767
          BR      vider
-ent�te:  STRO    t�te,d 
-         BR      r�ponse
-nbneg:   LDA     0,i         ;traitement avec le nombre n�gatif
+entete:  STRO    tete,d 
+         BR      reponse
+nbneg:   LDA     0,i         ;traitement avec le nombre negatif
          LDA     nombre,d
          NEGA
          STA     nbnegati,d
@@ -450,20 +450,20 @@ fnormal: STRO    normale,d   ;fin normale du programme
 fin:     STOP 
 ;                         
 bienvenu:.ASCII  "Bienvenue au programme Les BASES !!!\x00"
-expl1:   .ASCII  "\n\nCe programme sert � convertir un nombre d�cimal en nombre binaire"
-         .ASCII  ", octal et hexad�cimal. Tapez le caract�re de point pour terminer le programme."
+expl1:   .ASCII  "\n\nCe programme sert a convertir un nombre decimal en nombre binaire"
+         .ASCII  ", octal et hexadecimal. Tapez le caractere de point pour terminer le programme."
          .BYTE    0
-expl2:   .ASCII  "\n\nAttention! Le nombre � convertir :\n\n"
-         .ASCII  "-doit �tre compos� par chiffres � de 0 � 9 �\n\n"
-         .ASCII  "-doit avoir maximum 6 caract�res\n\n"
-         .ASCII  "-doit �tre compris entre - 32 768 et + 32 767\n\n"
+expl2:   .ASCII  "\n\nAttention! Le nombre a convertir :\n\n"
+         .ASCII  "-doit etre compose par chiffres \n\n"
+         .ASCII  "-doit avoir maximum 6 caracteres\n\n"
+         .ASCII  "-doit etre compris entre - 32 768 et + 32 767\n\n"
          .BYTE    0
 demande: .ASCII  "\n\nVeillez entrez un nombre d�cimal (�.� - pour terminer): \x00"
-msgerreu:.ASCII  "\nEntr�e invalide.\n\n"
+msgerreu:.ASCII  "\nEntree invalide.\n\n"
          .BYTE   0                                      
 normale: .ASCII  "\n\nFin normale du programme."
          .BYTE   0 
-t�te:    .ASCII  "\nnombre\tbinaire         \toctal \td�cimal\thexad�cimal\n" 
+t�te:    .ASCII  "\nnombre\tbinaire         \toctal \tdecimal\thexadecimal\n" 
          .BYTE   0
 ;       
 nombre:    .block 2           ; #2d
